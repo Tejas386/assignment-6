@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+class DNode {
+public:
+    int data;
+    DNode* next;
+    DNode* prev;
+    
+    DNode(int val) {
+        data = val;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+int sizeDoublyLinkedList(DNode* head) {
+    int count = 0;
+    DNode* temp = head;
+    while (temp != nullptr) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+int sizeCircularLinkedList(Node* head) {
+    if (head == nullptr) return 0;
+    
+    int count = 0;
+    Node* temp = head;
+    do {
+        count++;
+        temp = temp->next;
+    } while (temp != head);
+    
+    return count;
+}
+
+int main() {
+    DNode* dHead = new DNode(10);
+    dHead->next = new DNode(20);
+    dHead->next->prev = dHead;
+    dHead->next->next = new DNode(30);
+    dHead->next->next->prev = dHead->next;
+    
+    Node* cHead = new Node(5);
+    cHead->next = new Node(15);
+    cHead->next->next = new Node(25);
+    cHead->next->next->next = cHead;
+    
+    cout << "Size of Doubly Linked List: " << sizeDoublyLinkedList(dHead) << endl;
+    cout << "Size of Circular Linked List: " << sizeCircularLinkedList(cHead) << endl;
+    
+    return 0;
+}
