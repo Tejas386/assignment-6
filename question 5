@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+bool isCircular(Node* head) {
+    if (head == nullptr) return true;
+    
+    Node* slow = head;
+    Node* fast = head;
+    
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if (slow == fast) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    Node* circularHead = new Node(1);
+    circularHead->next = new Node(2);
+    circularHead->next->next = new Node(3);
+    circularHead->next->next->next = new Node(4);
+    circularHead->next->next->next->next = circularHead;
+    
+    Node* linearHead = new Node(1);
+    linearHead->next = new Node(2);
+    linearHead->next->next = new Node(3);
+    linearHead->next->next->next = new Node(4);
+    
+    cout << "Circular List Test: " << (isCircular(circularHead) ? "Circular" : "Not Circular") << endl;
+    cout << "Linear List Test: " << (isCircular(linearHead) ? "Circular" : "Not Circular") << endl;
+    
+    return 0;
+}
