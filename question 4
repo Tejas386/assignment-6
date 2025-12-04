@@ -1,0 +1,77 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    char data;
+    Node* next;
+    Node* prev;
+    
+    Node(char val) {
+        data = val;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+bool isPalindrome(Node* head) {
+    if (head == nullptr) return true;
+    
+    Node* front = head;
+    Node* back = head;
+    
+    while (back->next != nullptr) {
+        back = back->next;
+    }
+    
+    while (front != back && front->prev != back) {
+        if (front->data != back->data) {
+            return false;
+        }
+        front = front->next;
+        back = back->prev;
+    }
+    
+    return true;
+}
+
+void displayList(Node* head) {
+    Node* temp = head;
+    while (temp != nullptr) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head1 = new Node('r');
+    head1->next = new Node('a');
+    head1->next->prev = head1;
+    head1->next->next = new Node('d');
+    head1->next->next->prev = head1->next;
+    head1->next->next->next = new Node('a');
+    head1->next->next->next->prev = head1->next->next;
+    head1->next->next->next->next = new Node('r');
+    head1->next->next->next->next->prev = head1->next->next->next;
+    
+    Node* head2 = new Node('h');
+    head2->next = new Node('e');
+    head2->next->prev = head2;
+    head2->next->next = new Node('l');
+    head2->next->next->prev = head2->next;
+    head2->next->next->next = new Node('l');
+    head2->next->next->next->prev = head2->next->next;
+    head2->next->next->next->next = new Node('o');
+    head2->next->next->next->next->prev = head2->next->next->next;
+    
+    cout << "List 1: ";
+    displayList(head1);
+    cout << "Is palindrome? " << (isPalindrome(head1) ? "Yes" : "No") << endl;
+    
+    cout << "\nList 2: ";
+    displayList(head2);
+    cout << "Is palindrome? " << (isPalindrome(head2) ? "Yes" : "No") << endl;
+    
+    return 0;
+}
